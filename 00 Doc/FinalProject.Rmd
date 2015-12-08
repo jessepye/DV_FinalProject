@@ -1,32 +1,69 @@
 ---
-title: "Data Visualization Shiny Project - U.S. College Data"
+title: "Data Visualization Final Project - U.S. College Data"
 author: "Daniel Schlomer, Jesse Pye"
-date: Nov. 23, 2015
+date: Dec 18, 2015
 output: html_document
 ---
 
-This is an html file that documents the steps to reproduce our project . This html file presents a visual story about our data and what we discovered about our data using visualization and workflow techniques.
+In this project, analysed a very large set of U.S. College Data. Every one of the over 7000 U.S. Colleges are represented, including private, public, and for profit universities, some with tens of thousands of undergraduates, and some with under a dozen. The data set had over 1300 columns, measuring factors like SAT scores, acceptance rates, cost, completion rates, and more.
 
-In this project, we created a shiny app using the college data from our last project.
+For reference, the code for our Shiny app can be found in ui.R and server.R, and the completed project can be found at https://danielschlomer.shinyapps.io/FinalProject
 
-The code can be found in ui.R and server.R, and the complete project can be found at https://danielschlomer.shinyapps.io/ShinyProject
-
-***
 
 Here is the source code for our shiny app:
 
 ```{r}
-source("../02 Shiny/server.R",echo=TRUE)
+source("../04 Shiny/server.R",echo=TRUE)
 ```
 
 ```{r}
-source("../02 Shiny/ui.R",echo=TRUE)
+source("../04 Shiny/ui.R",echo=TRUE)
 ```
 
 ***
 
-Our first visualization is a crosstab looks at the graduation rates of different types of schools. To form the crosstab, we used the governance type, total cost and school size as dimensions. Dividing the schools into these categories provided a look into how students perform at different types of schools. Our KPI is a measure of how many students graduate the college.  For-profit colleges have the lowest graduation rates and never rise above the 50% mark. As schools get larger, they typically have higher graduation rates.
+In total, the data show that there are 7804 different universities in the United States. This seems high. One way to get a feel for what kinds of colleges there are in the U.S. is to categorize them by size. To do this, we created a histogram of colleges, with bins based on the number of undergraduates.
 
-For our second visualization, we looked at the cost of persuing different degrees at schools with 20,000 students or more. In this bar chart, colleges are grouped according to the most popular degree type from that university and by their cost. "Low"" cost colleges cost less than $15,000/year, (including tuition, books, and living expenses), "medium" cost less than $30,000, and "high" cost more than $30,000. 
+[Tableau Screenshot]
 
-For our final visualization, by comparing two measures, we created a scatter plot, comparing average SAT scores against admission rates. 
+The Shiny implementation of this graph can be found at _________
+
+As you can see, the vast majority of these 7000 colleges are tiny, with fewer than ___ undergraduates.
+
+***
+
+But where are students actually attending college? From the graph above, it might look like students are overwhelmingly favoring small colleges. However, the previous graph is "misleading" because it gives equal weight to "Dance Theatre of Harlem Inc," with 11 undergraduates, and Ohio State, with over 43,000 undergraduates.
+
+What we want is to create our own categories (Small, Medium, and Large) and sum up the total number of students attending each kind of school there. The final result in Tableau looks like this:
+
+And our implementation in Shiny can be found at ______
+
+***
+
+We were also interested in another facet included in this data - percentage of "First Generation" college students at each college. A first generation student is a student who is the first in their family to attend college. We thought it would be interesting to compare this data with a college's retention rate - that is, the percentage of students who return after their first semester. Are first generation students inspired to work harder, and are more likely to return after a semester? Or do they struggle more than other students? This question can be answered with data.
+
+Here is what the visualization looks like in Tableau:
+
+[screenshot]
+
+And our implementation in Shiny can be found at ____
+
+As you can see, colleges with more first generation students have a lower rate of retention.
+
+***
+
+What else might affect retention rates? Our colleges are broken up in to categories: Public (e.g. UT), Private Non-Profit (e.g. Rice), and Private For-Profit (e.g. ITT Technical Institute). Do these different categories have different retention rates? We created a boxplot in Tableau to find out.
+
+[screenshot]
+
+Our implementation in Shiny can be found at ___
+
+As you can see, Private For-Profit colleges have by far the worst retention rates.
+
+***
+
+Finally, we looked at these categories again, and further broke them down by the size of the college. One measure of a college's quality is the rate of default - that is, the percentage of people who are unable to repay their college loans 3 years after graduation. We created a crosstab to look at this data.
+
+[screenshot]
+
+The Shiny implementation can be found at ___
