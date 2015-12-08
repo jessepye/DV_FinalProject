@@ -22,7 +22,8 @@ from (
         from COLLEGE_DATA_2013_FINAL
      )
 )
-                                           where CURROPER = 1"
+where CURROPER = 1
+and UGDS is not null"
 ')), httpheader=c(DB='jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER='C##cs329e_jjp378', PASS='orcl_jjp378', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE)));
 
 df$UGDS <- as.numeric(as.character(df$UGDS))

@@ -11,9 +11,9 @@ dashboardPage(
     sidebarMenu(
       menuItem("Boxplot", tabName = "boxplot", icon = icon("th")),
       menuItem("Histogram", tabName = "histogram", icon = icon("bar-chart")),
+      menuItem("ScatterPlot", tabName = "ScatterPlot", icon = icon("line-chart")),
       menuItem("Crosstab", tabName = "crosstab", icon = icon("dashboard")),
-      menuItem("Barchart", tabName = "barchart", icon = icon("th")),
-      menuItem("ScatterPlot", tabName = "ScatterPlot", icon = icon("th"))
+      menuItem("Barchart", tabName = "barchart", icon = icon("bar-chart"))
     )
   ),
   dashboardBody(
@@ -29,25 +29,25 @@ dashboardPage(
               actionButton(inputId = "clicks1",  label = "Click me"),
               plotOutput("distPlot1")
       ),
-      
-      # Fourth tab content
-      tabItem(tabName = "crosstab",
-              sliderInput("KPI4", "KPI_value:", 
-                          min = .1, max = .9,  value = .5),
-              actionButton(inputId = "clicks4",  label = "Click me"),
-              plotOutput("distPlot4")
-      ),
-      
-      # Second tab content
-      tabItem(tabName = "barchart",
-              actionButton(inputId = "clicks2",  label = "Click me"),
-              plotOutput("distPlot2")
-      ),
-      
+
       # Third tab content
       tabItem(tabName = "ScatterPlot",
               actionButton(inputId = "clicks3",  label = "Click me"),
               plotOutput("distPlot3")
+      ),
+      
+      # Fourth tab content
+      tabItem(tabName = "crosstab",
+              sliderInput("KPI4", "KPI_value:", 
+                          min = .01, max = .25,  value = .1),
+              actionButton(inputId = "clicks4",  label = "Click me"),
+              plotOutput("distPlot4")
+      ),
+      
+      # Fifth tab content
+      tabItem(tabName = "barchart",
+              actionButton(inputId = "clicks2",  label = "Click me"),
+              plotOutput("distPlot2")
       )
     )
   )
