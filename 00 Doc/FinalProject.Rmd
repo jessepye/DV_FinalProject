@@ -66,11 +66,13 @@ As you can see, Private For-Profit colleges have by far the worst retention rate
 
 Finally, we looked at these categories again, and further broke them down by the size of the college. One measure of a college's quality is the rate of default - that is, the percentage of people who are unable to repay their college loans 3 years after graduation. We created a crosstab to look at this data.
 
+For this graph, Small is 5000 or fewer undgraduates, Medium is 5001-10000, Large is 10,001-25,000, and Very Large is over 25,000. For the cost category, costs are measured annually, and Low is 0-15000, Medium is 15,001-25,000, and High is above 25,000.
+
 ![](crosstab.jpg)
 
 By running a SQL query, we can see a list of colleges in each of the above categories. We saved this query in 02Data/SchoolBreakdown.r 
 
-By running the query, we can see that low cost public universities include Community Colleges, such as  
+By running the query, we can see that low cost public universities include mostly community colleges and state colleges, such as Houston and Austin Community Colleges. 
 
 In the high cost, private, very large category, there is only one college - Liberty University. Our data shows that they have over 40,000 students, which most likely includes online students.
 

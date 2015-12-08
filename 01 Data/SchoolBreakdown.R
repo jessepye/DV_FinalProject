@@ -31,4 +31,4 @@ LowCostPublicVL <- subset(df, TOTALCOST == "1 LOW" & CONTROL == "Public" & SCHOO
 LowCostPublicS <- subset(df, TOTALCOST == "1 LOW" & CONTROL == "Public" & SCHOOLSIZE == "1 Small")
 HighCostPrivateVL <- subset(df, TOTALCOST == "3 HIGH" & CONTROL == "Private Nonprofit" & SCHOOLSIZE == "4 VeryLarge")
 
-write.table(LowCostPublicVL, file="./LowCostPublicColleges.txt", sep=",")
+write.table(LowCostPublicVL, file="./LowCostPublicColleges.csv", sep=",")
