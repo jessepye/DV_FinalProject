@@ -68,6 +68,12 @@ Finally, we looked at these categories again, and further broke them down by the
 
 ![](crosstab.jpg)
 
+By running a SQL query, we can see a list of colleges in each of the above categories. We saved this query in 02Data/SchoolBreakdown.r 
+
+By running the query, we can see that low cost public universities include Community Colleges, such as  
+
+In the high cost, private, very large category, there is only one college - Liberty University. Our data shows that they have over 40,000 students, which most likely includes online students.
+
 The Shiny implementation of this graph can be found under the crosstab tab.
 
 We also implemented an adjustable KPI - the user can set a cutoff point for default rates, above wich a grouping of colleges "fails."
