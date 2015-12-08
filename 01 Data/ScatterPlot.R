@@ -4,22 +4,23 @@ require("extrafont")
 require("ggplot2")
 
 df <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ", 'skipper.cs.utexas.edu:5001/rest/native/?query=
-"select INSTNM, ADM_RATE, SAT_AVG
-from COLLEGE_DATA_2013
-where NOT(
-ADM_RATE is NULL OR
-SAT_AVG is NULL
-)"
+"select PAR_ED_PCT_1STGEN, RET_FT4
+from COLLEGE_DATA_2013_FINAL
+"
 ')), httpheader=c(DB='jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER='C##cs329e_jjp378', PASS='orcl_jjp378', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE)));
+
+df$PAR_ED_PCT_1STGEN <- as.numeric(as.character(df$PAR_ED_PCT_1STGEN))
+df$RET_FT4 <- as.numeric(as.character(df$RET_FT4))
+
 
 ggplot() + 
   coord_cartesian() + 
   scale_x_continuous() +
   scale_y_continuous() +
-  labs(title='SAT Scores and College Admission') +
-  labs(x="Admission Rate", y="Average SAT Score") +
+  labs(title='Percentage of 1st Generation College Students vs Retention Rate') +
+  labs(x="Percentage of 1st Generation College Students", y="Retention Rate") +
   layer(data=df, 
-        mapping=aes(x=ADM_RATE, y=SAT_AVG), 
+        mapping=aes(x=PAR_ED_PCT_1STGEN, y=RET_FT4), 
         stat="identity",
         stat_params=list(),
         geom="point",
