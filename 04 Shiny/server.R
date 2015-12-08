@@ -142,7 +142,7 @@ Order By CONTROL, TotalCost, SchoolSize))"
       scale_x_discrete() +
       scale_y_discrete() +
       facet_grid(GOVTYPE~.) +
-      labs(title='Performance of College Types') +
+      labs(title='Default Rate of Students') +
       labs(x="School Size", y="Cost of School / Governance Type") +
       layer(data=df4(), 
             mapping=aes(x=SCHOOLSIZE, y=TOTALCOST, label=round(DEFAULTRATE, 4)), 
