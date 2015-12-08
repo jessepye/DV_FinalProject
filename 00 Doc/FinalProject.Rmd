@@ -24,11 +24,11 @@ source("../04 Shiny/ui.R",echo=TRUE)
 
 In total, the data show that there are 7804 different universities in the United States. This seems high. One way to get a feel for what kinds of colleges there are in the U.S. is to categorize them by size. To do this, we created a histogram of colleges, with bins based on the number of undergraduates.
 
-[Tableau Screenshot]
+![](histogram.jpg)
 
-The Shiny implementation of this graph can be found at _________
+The Shiny implementation of this graph can be found under the histogram tab.
 
-As you can see, the vast majority of these 7000 colleges are tiny, with fewer than ___ undergraduates.
+As you can see, the vast majority of these 7000 colleges are small. It turns out that there are thousands of colleges with fewer than 1000 students.
 
 ***
 
@@ -36,7 +36,9 @@ But where are students actually attending college? From the graph above, it migh
 
 What we want is to create our own categories (Small, Medium, and Large) and sum up the total number of students attending each kind of school there. The final result in Tableau looks like this:
 
-And our implementation in Shiny can be found at ______
+![](barchart.png)
+
+The Shiny implementation of this graph can be found under the barchart tab.
 
 ***
 
@@ -44,9 +46,9 @@ We were also interested in another facet included in this data - percentage of "
 
 Here is what the visualization looks like in Tableau:
 
-[screenshot]
+![](scatterplot.jpg)
 
-And our implementation in Shiny can be found at ____
+The Shiny implementation of this graph can be found under the scatterplot tab.
 
 As you can see, colleges with more first generation students have a lower rate of retention.
 
@@ -54,9 +56,9 @@ As you can see, colleges with more first generation students have a lower rate o
 
 What else might affect retention rates? Our colleges are broken up in to categories: Public (e.g. UT), Private Non-Profit (e.g. Rice), and Private For-Profit (e.g. ITT Technical Institute). Do these different categories have different retention rates? We created a boxplot in Tableau to find out.
 
-[screenshot]
+![](boxplot.jpg)
 
-Our implementation in Shiny can be found at ___
+The Shiny implementation of this graph can be found under the boxplot tab.
 
 As you can see, Private For-Profit colleges have by far the worst retention rates.
 
@@ -64,6 +66,8 @@ As you can see, Private For-Profit colleges have by far the worst retention rate
 
 Finally, we looked at these categories again, and further broke them down by the size of the college. One measure of a college's quality is the rate of default - that is, the percentage of people who are unable to repay their college loans 3 years after graduation. We created a crosstab to look at this data.
 
-[screenshot]
+![](crosstab.jpg)
 
-The Shiny implementation can be found at ___
+The Shiny implementation of this graph can be found under the crosstab tab.
+
+We also implemented an adjustable KPI - the user can set a cutoff point for default rates, above wich a grouping of colleges "fails."
