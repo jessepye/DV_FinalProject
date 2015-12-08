@@ -64,40 +64,72 @@ AND UGDS < 60000)"
     plot1
   })
 
+  
+  # Begin code for Third Tab:
+  
+  df3 <- eventReactive(input$clicks3, {data.frame(fromJSON(getURL(URLencode(gsub("\n", " ", 'skipper.cs.utexas.edu:5001/rest/native/?query=
+"select PAR_ED_PCT_1STGEN, RET_FT4, CURROPER, UGDS
+from COLLEGE_DATA_2013_FINAL
+where CURROPER = 1
+and RET_FT4>0
+and RET_FT4<1
+and PAR_ED_PCT_1STGEN is not null"
+')), httpheader=c(DB='jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER='C##cs329e_jjp378', PASS='orcl_jjp378', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE)))
+  })
+  
+  output$distPlot3 <- renderPlot(height=500, width=1000, {
+    plot3 <- ggplot() + 
+      coord_cartesian() + 
+      scale_x_continuous() +
+      scale_y_continuous() +
+      labs(title='Percentage of 1st Generation College Students vs Retention Rate') +
+      labs(x="Percentage of 1st Generation College Students", y="Retention Rate") +
+      layer(data=df3(), 
+            mapping=aes(x=PAR_ED_PCT_1STGEN, y=RET_FT4, size=UGDS), 
+            stat="identity",
+            stat_params=list(),
+            geom="point",
+            geom_params=list(),
+            position=position_identity()
+      ) + theme_classic()
+    plot3
+  })
+  
+
 # Fourth Tab
   
   KPI_value <- reactive({input$KPI4})
   rv <- reactiveValues(alpha = 0.50)
   
   df4 <- eventReactive(input$clicks4, {data.frame(fromJSON(getURL(URLencode(gsub("\n", " ", 'skipper.cs.utexas.edu:5001/rest/native/?query=
-"select GovType, TotalCost, SchoolSize, GradRate,
+"select GovType, TotalCost, SchoolSize, DefaultRate,
 CASE
-when GradRate < "p1" then \\\'Fail\\\'
+when DefaultRate > "p1" then \\\'Fail\\\'
 else \\\'Pass\\\'
 end kpi
-from (select TotalCost, SchoolSize, GradRate,
+from (select TotalCost, SchoolSize, DefaultRate,
 CASE CONTROL
 WHEN 1 THEN \\\'Public\\\'
 WHEN 2 THEN \\\'Private Nonprofit\\\'
 WHEN 3 THEN \\\'Private For-profit\\\'
 END GovType
-from (select CONTROL, TotalCost, SchoolSize, AVG(C150_4) as GradRate
-from (select CONTROL, SchoolSize, C150_4,
+from (select CONTROL, TotalCost, SchoolSize, AVG(Cdr3) as DefaultRate
+from (select CONTROL, SchoolSize, Cdr3,
 CASE
 WHEN COSTT4_A > 30000 THEN \\\'3 HIGH\\\'
 WHEN COSTT4_A > 15000 THEN \\\'2 MEDIUM\\\'
 ELSE \\\'1 LOW\\\'
 END TotalCost
-from (SELECT C150_4, COSTT4_A, CONTROL,
+from (SELECT Cdr3, COSTT4_A, CONTROL,
 CASE
 WHEN Ugds <= 5000 THEN \\\'1 Small\\\'
 WHEN Ugds <= 10000 THEN \\\'2 Medium\\\'
 WHEN Ugds <= 25000 THEN \\\'3 Large\\\'
 ELSE \\\'4 VeryLarge\\\'
 END SchoolSize
-from COLLEGE_DATA_2013
+from COLLEGE_DATA_2013_FINAL
 where (Costt4_A is NOT NULL
-AND C150_4 is NOT NULL
+AND Cdr3 is NOT NULL
 AND Ugds is NOT NULL)))
 Group By CONTROL, SchoolSize, TotalCost
 Order By CONTROL, TotalCost, SchoolSize))"
@@ -105,15 +137,15 @@ Order By CONTROL, TotalCost, SchoolSize))"
   })
   
   output$distPlot4 <- renderPlot({             
-    plot <- ggplot() +
+    plot4 <- ggplot() +
       coord_cartesian() + 
       scale_x_discrete() +
       scale_y_discrete() +
       facet_grid(GOVTYPE~.) +
-      labs(title='Performance of College Types') +
+      labs(title='Default Rate of Students') +
       labs(x="School Size", y="Cost of School / Governance Type") +
       layer(data=df4(), 
-            mapping=aes(x=SCHOOLSIZE, y=TOTALCOST, label=round(GRADRATE, 4)), 
+            mapping=aes(x=SCHOOLSIZE, y=TOTALCOST, label=round(DEFAULTRATE, 4)), 
             stat="identity",
             stat_params=list(),
             geom="text",
@@ -128,69 +160,41 @@ Order By CONTROL, TotalCost, SchoolSize))"
             geom_params=list(alpha=0.50), 
             position=position_identity()
       ) + theme_minimal()
-    plot
+    plot4
   }) 
   
   observeEvent(input$clicks, {
     print(as.numeric(input$clicks))
   })
   
-  # Begin code for Second Tab:
+  # Begin code for fifth Tab:
   
   df2 <- eventReactive(input$clicks2, {data.frame(fromJSON(getURL(URLencode(gsub("\n", " ", 'skipper.cs.utexas.edu:5001/rest/native/?query=
-"select INSTNM, Costt4_A, Ugds, Preddeg
-from COLLEGE_DATA_2013
-where Costt4_A is NOT NULL
-AND Ugds > 30000"
+"select INSTNM, UGDS, CONTROL, CURROPER, GOVTYPE, SCHOOLSIZE
+from (
+    select INSTNM, UGDS, CONTROL, CURROPER, GOVTYPE,
+    CASE
+    WHEN Ugds <= 4000 THEN \\\'1 Small\\\'
+    WHEN Ugds <= 14000 THEN \\\'2 Medium\\\'
+    ELSE \\\'3 Large\\\'
+    END SCHOOLSIZE
+    from (
+        select INSTNM, UGDS, CONTROL, CURROPER,
+        CASE
+        WHEN CONTROL = 1 THEN \\\'1 Public\\\'
+        WHEN CONTROL = 2 THEN \\\'2 Private Non-Profit\\\'
+        WHEN CONTROL = 3 THEN \\\'3 Private For-Profit\\\'
+        END GOVTYPE
+        from COLLEGE_DATA_2013_FINAL
+     )
+)
+where CURROPER = 1
+and UGDS is not null"
 ')), httpheader=c(DB='jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER='C##cs329e_jjp378', PASS='orcl_jjp378', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE)))
   })
   
   output$distPlot2 <- renderPlot(height=500, width=1000, {
-    plot2 <- ggplot() + 
-      coord_cartesian() + 
-      scale_x_discrete() +
-      scale_y_continuous() +
-      facet_wrap(~PREDDEG) +
-      labs(title='Cost of College') +
-      labs(x="Institution", y="Cost") +
-      layer(data=df2(), 
-            mapping=aes(x=INSTNM, y=COSTT4_A), 
-            stat="identity",
-            stat_params=list(),
-            geom="bar",
-            geom_params=list(),
-            position=position_identity()
-      ) + coord_flip() + theme_bw()
+    plot2 <- qplot(SCHOOLSIZE, data=df2(), geom="bar", weight=UGDS, facets = ~ GOVTYPE, fill=factor(SCHOOLSIZE))
     plot2
-  })
-  
-  # Begin code for Third Tab:
-  
-  df3 <- eventReactive(input$clicks3, {data.frame(fromJSON(getURL(URLencode(gsub("\n", " ", 'skipper.cs.utexas.edu:5001/rest/native/?query=
-"select INSTNM, ADM_RATE, SAT_AVG
-from COLLEGE_DATA_2013
-where NOT(
-ADM_RATE is NULL OR
-SAT_AVG is NULL
-)"
-')), httpheader=c(DB='jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER='C##cs329e_jjp378', PASS='orcl_jjp378', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE)))
-  })
-  
-  output$distPlot3 <- renderPlot(height=500, width=1000, {
-    plot3 <- ggplot() + 
-      coord_cartesian() + 
-      scale_x_continuous() +
-      scale_y_continuous() +
-      labs(title='SAT Scores and College Admission') +
-      labs(x="Admission Rate", y="Average SAT Score") +
-      layer(data=df3(), 
-            mapping=aes(x=ADM_RATE, y=SAT_AVG), 
-            stat="identity",
-            stat_params=list(),
-            geom="point",
-            geom_params=list(),
-            position=position_identity()
-      ) + theme_classic()
-    plot3
   })
 })

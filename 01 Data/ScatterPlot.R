@@ -9,12 +9,8 @@ from COLLEGE_DATA_2013_FINAL
 where CURROPER = 1
 and RET_FT4>0
 and RET_FT4<1
-"
+and PAR_ED_PCT_1STGEN is not null"
 ')), httpheader=c(DB='jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER='C##cs329e_jjp378', PASS='orcl_jjp378', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE)));
-
-df$PAR_ED_PCT_1STGEN <- as.numeric(as.character(df$PAR_ED_PCT_1STGEN))
-df$RET_FT4 <- as.numeric(as.character(df$RET_FT4))
-
 
 ggplot() + 
   coord_cartesian() + 

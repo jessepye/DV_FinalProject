@@ -51,7 +51,7 @@ ggplot() +
   ) +
   layer(data=df, 
         mapping=aes(x=SCHOOLSIZE, y=TOTALCOST, fill=KPI), 
-        stat="identity",
+        stat="identity", 
         stat_params=list(), 
         geom="tile",
         geom_params=list(alpha=0.50), 
